@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 
 const URL = `http://localhost:3000`;
+
 interface UserProps {
   id?: number;
   name: string;
@@ -42,12 +43,9 @@ export class User {
   }
 
   async fetch(): Promise<void> {
-    console.log(this.get('id'), 'HMMM');
     const response: AxiosResponse = await axios.get(
       `${URL}/users/${this.get('id')}`
     );
-
-    console.log('DATA', response);
 
     this.set(response.data);
   }

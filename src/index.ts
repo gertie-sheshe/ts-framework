@@ -1,5 +1,3 @@
-console.log('wauuu');
-
 import { User } from './models/User';
 
 const user = new User({ name: 'GeeGee', age: 78 });
