@@ -1,9 +1,9 @@
-import axios, { AxiosResponse } from 'axios';
 import { Events } from './Events';
+import { Sync } from './Sync';
 
-const URL = `http://localhost:3000`;
+const URL = `http://localhost:3000/users`;
 
-interface UserProps {
+export interface UserProps {
   id?: number;
   name: string;
   age: number;
@@ -11,6 +11,7 @@ interface UserProps {
 
 export class User {
   public events: Events = new Events();
+  public sync: Sync<UserProps> = new Sync(URL);
 
   constructor(private data: UserProps) {}
 
@@ -20,25 +21,5 @@ export class User {
 
   set(update: Partial<UserProps>): void {
     Object.assign(this.data, update);
-  }
-
-  async fetch(): Promise<void> {
-    const response: AxiosResponse = await axios.get(
-      `${URL}/users/${this.get('id')}`
-    );
-
-    this.set(response.data);
-  }
-
-  async save(): Promise<void> {
-    const id = this.get('id');
-
-    if (id) {
-      const response = await axios.put(`${URL}/users/${id}`, this.data);
-      this.set(response.data);
-    } else {
-      const response = await axios.post(`${URL}/users`, this.data);
-      this.set(response.data);
-    }
   }
 }
