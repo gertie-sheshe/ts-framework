@@ -1,5 +1,6 @@
 import { Events } from './Events';
 import { Sync } from './Sync';
+import { Attributes } from './Attributes';
 
 const URL = `http://localhost:3000/users`;
 
@@ -12,14 +13,9 @@ export interface UserProps {
 export class User {
   public events: Events = new Events();
   public sync: Sync<UserProps> = new Sync(URL);
+  public attributes: Attributes<UserProps>;
 
-  constructor(private data: UserProps) {}
-
-  get(propName: string): string | number {
-    return this.data[propName];
-  }
-
-  set(update: Partial<UserProps>): void {
-    Object.assign(this.data, update);
+  constructor(attrs: UserProps) {
+    this.attributes = new Attributes<UserProps>(attrs);
   }
 }
