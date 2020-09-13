@@ -2,9 +2,15 @@ import { User } from './models/User';
 
 const user = new User({ name: 'GeeGee', age: 78 });
 
-// user.save().then(() => {
-//   user.fetch();
-// });
+user.on('save', () => {
+  console.log('Saaaaaave', user);
+});
+
+// user.save();
+
+user.save().then(() => {
+  user.fetch();
+});
 
 // user.set({ age: 2 });
 
