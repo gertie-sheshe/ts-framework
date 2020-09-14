@@ -1,14 +1,24 @@
-import { User } from './models/User';
+import { User, UserProps } from './models/User';
+import { Collection } from './models/Collection';
 
-const user = User.buildUser({ name: 'GeeGee', age: 78 });
+const collection = new Collection<User, UserProps>(
+  'http://localhost:3000/users',
+  (json: UserProps) => User.buildUser(json)
+);
 
-user.save();
+collection.fetch();
 
-// console.log(user.get('age'));
-
-user.on('save', () => {
-  console.log('Saaaaaave', user.get('id'));
+collection.on('change', () => {
+  console.log('WAUUUUU', collection);
 });
+
+// const user = User.buildUser({ name: 'GeeGee', age: 78 });
+
+// user.save();
+
+// user.on('save', () => {
+//   console.log('Saaaaaave', user.get('id'));
+// });
 
 // // user.save();
 
