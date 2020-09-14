@@ -4,21 +4,21 @@ import { Callback } from './Events';
 interface Attributes<T> {
   set(value: T): void;
   getAll(): T;
-  get<K extends keyof T>(key: K): T[K]
+  get<K extends keyof T>(key: K): T[K];
 }
 
 interface Sync<T> {
   fetch(id: number): AxiosPromise;
-  save(data: T): AxiosPromise
+  save(data: T): AxiosPromise;
 }
 
 interface Events {
   on(eventName: string, callback: Callback): void;
-  trigger(eventName: string): void
+  trigger(eventName: string): void;
 }
- 
+
 interface HasId {
-  id?: number
+  id?: number;
 }
 
 export class BaseClass<T extends HasId> {
@@ -26,8 +26,8 @@ export class BaseClass<T extends HasId> {
     private attributes: Attributes<T>,
     private events: Events,
     private sync: Sync<T>
-  ) { }
-  
+  ) {}
+
   get on() {
     return this.events.on;
   }
@@ -40,8 +40,8 @@ export class BaseClass<T extends HasId> {
     return this.attributes.get;
   }
 
-  set(update: <T>): void {
-    this.attributes.set(update);
+  set(value: T): void {
+    this.attributes.set(value);
     this.events.trigger('change');
   }
 
