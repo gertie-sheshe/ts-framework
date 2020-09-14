@@ -2,6 +2,7 @@ import { BaseClass } from './BaseClass';
 import { Attributes } from './Attributes';
 import { ApiSync } from './ApiSync';
 import { Events } from './Events';
+import { Collection } from './Collection';
 
 const URL = `http://localhost:3000/users`;
 
@@ -17,6 +18,12 @@ export class User extends BaseClass<UserProps> {
       new Attributes<UserProps>(attrs),
       new Events(),
       new ApiSync<UserProps>(URL)
+    );
+  }
+
+  static buildUserCollection(): Collection<User, UserProps> {
+    return new Collection<User, UserProps>(URL, (json: UserProps) =>
+      User.buildUser(json)
     );
   }
 }
