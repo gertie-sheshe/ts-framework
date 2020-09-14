@@ -8,8 +8,8 @@ const URL = `http://localhost:3000/users`;
 
 export interface UserProps {
   id?: number;
-  name: string;
-  age: number;
+  name?: string;
+  age?: number;
 }
 
 export class User extends BaseClass<UserProps> {
@@ -25,5 +25,10 @@ export class User extends BaseClass<UserProps> {
     return new Collection<User, UserProps>(URL, (json: UserProps) =>
       User.buildUser(json)
     );
+  }
+
+  setRandomAge(): void {
+    const age = Math.round(Math.random() * 100);
+    this.set({ age });
   }
 }
